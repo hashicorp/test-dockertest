@@ -1,0 +1,19 @@
+version: 2
+jobs:
+    test-dockertest:
+        docker:
+            - image: circleci/golang:1.11
+        working_directory: /go/src/github.com/hashicorp/test-dockertest
+        steps:
+            - checkout
+            - setup_remote_docker
+            - run:
+                name:
+                    test
+                environment:
+                    GO111MODULE: "on"
+                command: |
+                    whoami
+                    groups
+                    ls -l /var/run/docker*
+                    go test
