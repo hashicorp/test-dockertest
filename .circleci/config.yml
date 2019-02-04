@@ -17,3 +17,8 @@ jobs:
                     groups
                     ls -l /var/run/docker*
                     go test
+workflows:
+    version: 2
+    doit:
+        jobs:
+            - test-dockertest
