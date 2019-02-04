@@ -34,7 +34,7 @@ func TestMain(m *testing.M) {
         }
         return db.Ping()
     }); err != nil {
-        log.Fatalf("Could not connect to docker: %s", err)
+        log.Fatalf("Could not connect to mysql: %s", err)
     }
 
     code := m.Run()
