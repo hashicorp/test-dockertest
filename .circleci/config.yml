@@ -15,7 +15,7 @@ jobs:
                 command: |
                     whoami
                     groups
-                    ls -l /var/run/docker*
+                    ls -l /var/run/docker* || true
                     go test
 workflows:
     version: 2
