@@ -28,7 +28,7 @@ func TestMain(m *testing.M) {
     // exponential backoff-retry, because the application in the container might not be ready to accept connections yet
     if err := pool.Retry(func() error {
         var err error
-        db, err = sql.Open("mysql", fmt.Sprintf("root:secret@(localhost:%s)/mysql", resource.GetPort("3306/tcp")))
+        db, err = sql.Open("mysql", fmt.Sprintf("root:secret@(%s)/mysql", resource.GetHostPort("3306/tcp")))
         if err != nil {
             return err
         }
@@ -48,6 +48,9 @@ func TestMain(m *testing.M) {
 }
 
 func TestSomething(t *testing.T) {
-    // db.Query()
+    _, err := db.Query("SELECT 1")
+    if err != nil {
+        t.Fail()
+    }
 }
 
