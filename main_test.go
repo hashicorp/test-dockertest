@@ -26,15 +26,16 @@ func TestMain(m *testing.M) {
     }
 
     // exponential backoff-retry, because the application in the container might not be ready to accept connections yet
+    hostport := resource.GetHostPort("3306/tcp")
     if err := pool.Retry(func() error {
         var err error
-        db, err = sql.Open("mysql", fmt.Sprintf("root:secret@(%s)/mysql", resource.GetHostPort("3306/tcp")))
+        db, err = sql.Open("mysql", fmt.Sprintf("root:secret@(%s)/mysql", hostport))
         if err != nil {
             return err
         }
         return db.Ping()
     }); err != nil {
-        log.Fatalf("Could not connect to mysql: %s", err)
+        log.Fatalf("Could not connect to mysql at %s: %s", hostport, err)
     }
 
     code := m.Run()
