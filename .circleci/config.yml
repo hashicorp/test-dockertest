@@ -17,7 +17,7 @@ jobs:
                     groups
                     ls -l /var/run/docker* || true
                     env | grep DOCKER
-                    go test
+                    go test -mod=vendor
 workflows:
     version: 2
     doit:
